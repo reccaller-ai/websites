@@ -9,6 +9,11 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  # Note: GitHub Pages must be manually enabled first:
+  # Repository Settings → Pages → Source: GitHub Actions
+  # The workflow cannot enable Pages automatically due to security restrictions
+  # Additional permissions needed to enable Pages
+  administration: write
 
 jobs:
   deploy:
