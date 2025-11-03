@@ -9,6 +9,9 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  # Note: GitHub Pages must be manually enabled first:
+  # Repository Settings → Pages → Source: GitHub Actions
+  # The workflow cannot enable Pages automatically due to security restrictions
 
 jobs:
   deploy:
@@ -33,8 +36,8 @@ jobs:
         
     - name: Setup Pages
       uses: actions/configure-pages@v4
-      with:
-        enablement: true  # Enable GitHub Pages if not already enabled
+      # Note: GitHub Pages must be manually enabled first in repository settings
+      # Settings → Pages → Source: GitHub Actions
       
     - name: Prepare website for deployment
       run: |
