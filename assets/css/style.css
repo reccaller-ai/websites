@@ -63,6 +63,18 @@ body {
     font-weight: 800;
     color: var(--primary);
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo img {
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.logo span {
+    line-height: 1;
 }
 
 .nav-links {
