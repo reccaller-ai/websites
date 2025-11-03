@@ -1,0 +1,61 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Verify website files exist
+      run: |
+        if [ ! -f "index.html" ]; then
+          echo "❌ Error: index.html does not exist"
+          exit 1
+        fi
+        echo "✅ Website files found"
+        ls -la || true
+        
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+      
+    - name: Prepare website for deployment
+      run: |
+        # Copy CNAME to root if it exists
+        if [ -f "CNAME" ]; then
+          echo "✅ CNAME found"
+        fi
+        # Ensure directory structure is ready
+        mkdir -p assets/css assets/js
+        echo "✅ Website structure verified"
+        # List contents for debugging
+        echo "Website contents:"
+        ls -la || true
+        
+    - name: Upload to GitHub Pages
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: '.'
+      continue-on-error: false
+        
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
+      timeout-minutes: 5
+      continue-on-error: false
+
